@@ -474,9 +474,9 @@ class TestArchaeologicalSiteDetector:
         )  # Should have fewer or equal clusters
 
         for cluster in clustered_sites:
-            assert "representative_coordinates" in cluster
-            assert "member_count" in cluster
-            assert "average_confidence" in cluster
+            assert hasattr(cluster, "representative_coordinates")
+            assert hasattr(cluster, "member_count")
+            assert hasattr(cluster, "average_confidence")
 
     def test_generate_site_report(self):
         """Test generation of site discovery report."""

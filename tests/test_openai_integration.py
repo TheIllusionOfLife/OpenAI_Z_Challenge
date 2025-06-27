@@ -54,9 +54,7 @@ class TestOpenAIClient:
     @pytest.mark.asyncio
     async def test_async_completion(self):
         """Test async completion functionality."""
-        client = OpenAIClient(api_key="test_key")
-
-        with patch("openai.AsyncOpenAI") as mock_openai:
+        with patch("src.openai_integration.AsyncOpenAI") as mock_openai:
             mock_response = MagicMock()
             mock_response.choices = [MagicMock()]
             mock_response.choices[0].message.content = "Test response"
@@ -66,6 +64,7 @@ class TestOpenAIClient:
                 return_value=mock_response
             )
 
+            client = OpenAIClient(api_key="test_key")
             response = await client.async_completion(
                 messages=[{"role": "user", "content": "Test prompt"}], model="gpt-4.1"
             )
@@ -75,9 +74,7 @@ class TestOpenAIClient:
 
     def test_sync_completion(self):
         """Test synchronous completion functionality."""
-        client = OpenAIClient(api_key="test_key")
-
-        with patch("openai.OpenAI") as mock_openai:
+        with patch("src.openai_integration.OpenAI") as mock_openai:
             mock_response = MagicMock()
             mock_response.choices = [MagicMock()]
             mock_response.choices[0].message.content = "Test response"
@@ -87,6 +84,7 @@ class TestOpenAIClient:
                 mock_response
             )
 
+            client = OpenAIClient(api_key="test_key")
             response = client.sync_completion(
                 messages=[{"role": "user", "content": "Test prompt"}], model="o3-mini"
             )
@@ -96,9 +94,7 @@ class TestOpenAIClient:
 
     def test_error_handling_with_retries(self):
         """Test error handling and retry mechanism."""
-        client = OpenAIClient(api_key="test_key", max_retries=3)
-
-        with patch("openai.OpenAI") as mock_openai:
+        with patch("src.openai_integration.OpenAI") as mock_openai:
             # First two calls fail, third succeeds
             mock_openai.return_value.chat.completions.create.side_effect = [
                 Exception("API Error"),
@@ -109,6 +105,7 @@ class TestOpenAIClient:
                 ),
             ]
 
+            client = OpenAIClient(api_key="test_key", max_retries=3)
             response = client.sync_completion(
                 messages=[{"role": "user", "content": "Test"}], model="gpt-4.1"
             )

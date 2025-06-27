@@ -162,16 +162,38 @@ class RasterProcessor:
         # Use finest resolution
         target_resolution = min(all_resolutions)
 
+        # Calculate common grid dimensions based on common bounds and target resolution
+        common_width = int((min_bounds[2] - min_bounds[0]) / target_resolution)
+        common_height = int((min_bounds[3] - min_bounds[1]) / target_resolution)
+        
+        # Create common transform for the aligned grid
+        common_transform = from_bounds(
+            min_bounds[0], min_bounds[1], min_bounds[2], min_bounds[3],
+            common_width, common_height
+        )
+
         aligned_rasters = []
         for raster in rasters:
-            # For simplicity, just resample to target resolution
-            resampled_data, new_transform = self.resample_raster(
+            # Resample to target resolution and crop to common bounds
+            resampled_data, _ = self.resample_raster(
                 raster["data"], raster["transform"], target_resolution
             )
+            
+            # Crop/pad to common dimensions
+            if resampled_data.shape != (common_height, common_width):
+                # Create output array with common dimensions
+                aligned_data = np.zeros((common_height, common_width), dtype=resampled_data.dtype)
+                
+                # Copy overlapping area
+                h_min = min(resampled_data.shape[0], common_height)
+                w_min = min(resampled_data.shape[1], common_width)
+                aligned_data[:h_min, :w_min] = resampled_data[:h_min, :w_min]
+            else:
+                aligned_data = resampled_data
 
             aligned_raster = {
-                "data": resampled_data,
-                "transform": new_transform,
+                "data": aligned_data,
+                "transform": common_transform,
                 "crs": raster["crs"],
             }
             aligned_rasters.append(aligned_raster)
