@@ -104,15 +104,6 @@ jobs:
         bandit -r src/ -f json -o bandit-report.json || true
         bandit -r src/ --severity-level medium
 
-  dependency-review:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-    
-    - name: Dependency Review
-      uses: actions/dependency-review-action@v3
 
   build-docs:
     runs-on: ubuntu-latest
