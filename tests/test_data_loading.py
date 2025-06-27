@@ -5,23 +5,24 @@ Following TDD approach, these tests define the expected interface and behavior
 for data loading modules before implementation.
 """
 
-import pytest
-import pandas as pd
+from pathlib import Path
+from unittest.mock import MagicMock, Mock, patch
+
 import geopandas as gpd
 import numpy as np
+import pandas as pd
+import pytest
 import rasterio
-from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
 
 # Import modules to be tested (these will fail initially)
 try:
     from src.data_loading import (
-        LiDARLoader,
-        SatelliteImageLoader,
-        NDVILoader,
-        GISDataLoader,
         ArchaeologicalLiteratureLoader,
         DatasetValidator,
+        GISDataLoader,
+        LiDARLoader,
+        NDVILoader,
+        SatelliteImageLoader,
     )
 except ImportError:
     # Expected to fail initially in TDD

@@ -5,15 +5,15 @@ This module handles all configuration settings, environment variables,
 and project-specific parameters.
 """
 
-import os
-from pathlib import Path
-from typing import Dict, Any, Optional, List
-from dataclasses import dataclass, field
-from pydantic import BaseSettings, validator
 import json
+import os
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 import yaml
 from dotenv import load_dotenv
-
+from pydantic import BaseSettings, validator
 
 # Load environment variables from .env file if it exists
 load_dotenv()

@@ -5,24 +5,25 @@ Following TDD approach, these tests define the expected interface and behavior
 for geospatial processing modules before implementation.
 """
 
-import pytest
+from unittest.mock import MagicMock, Mock, patch
+
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
-from shapely.geometry import Point, Polygon
-from unittest.mock import Mock, patch, MagicMock
+import pytest
 import rasterio
 from rasterio.transform import from_bounds
+from shapely.geometry import Point, Polygon
 
 # Import modules to be tested (these will fail initially)
 try:
     from src.geospatial_processing import (
+        ArchaeologicalSiteDetector,
         CoordinateTransformer,
         RasterProcessor,
+        SpatialFeatureExtractor,
         TerrainAnalyzer,
         VegetationAnalyzer,
-        SpatialFeatureExtractor,
-        ArchaeologicalSiteDetector,
     )
 except ImportError:
     # Expected to fail initially in TDD

@@ -8,15 +8,16 @@ and generate descriptions for discovered sites.
 
 import asyncio
 import json
+import logging
 import os
 import re
 import time
-from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
-import tiktoken
+from typing import Any, Dict, List, Optional, Union
+
 import openai
-from openai import OpenAI, AsyncOpenAI
-import logging
+import tiktoken
+from openai import AsyncOpenAI, OpenAI
 
 
 @dataclass

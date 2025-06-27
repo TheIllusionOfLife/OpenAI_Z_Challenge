@@ -6,22 +6,23 @@ for OpenAI model integration before implementation. This includes o3/o4 mini
 and GPT-4.1 models for archaeological literature analysis.
 """
 
-import pytest
-import json
-from unittest.mock import Mock, patch, MagicMock, AsyncMock
 import asyncio
-from typing import List, Dict, Any
+import json
+from typing import Any, Dict, List
+from unittest.mock import AsyncMock, MagicMock, Mock, patch
+
+import pytest
 
 # Import modules to be tested (these will fail initially)
 try:
     from src.openai_integration import (
-        OpenAIClient,
-        LiteratureAnalyzer,
-        SiteDescriptionGenerator,
         ArchaeologicalKnowledgeExtractor,
+        LiteratureAnalyzer,
         ModelSelector,
-        TokenManager,
+        OpenAIClient,
         PromptTemplate,
+        SiteDescriptionGenerator,
+        TokenManager,
     )
 except ImportError:
     # Expected to fail initially in TDD
