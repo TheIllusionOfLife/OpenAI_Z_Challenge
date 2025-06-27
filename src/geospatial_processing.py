@@ -165,11 +165,15 @@ class RasterProcessor:
         # Calculate common grid dimensions based on common bounds and target resolution
         common_width = int((min_bounds[2] - min_bounds[0]) / target_resolution)
         common_height = int((min_bounds[3] - min_bounds[1]) / target_resolution)
-        
+
         # Create common transform for the aligned grid
         common_transform = from_bounds(
-            min_bounds[0], min_bounds[1], min_bounds[2], min_bounds[3],
-            common_width, common_height
+            min_bounds[0],
+            min_bounds[1],
+            min_bounds[2],
+            min_bounds[3],
+            common_width,
+            common_height,
         )
 
         aligned_rasters = []
@@ -178,12 +182,14 @@ class RasterProcessor:
             resampled_data, _ = self.resample_raster(
                 raster["data"], raster["transform"], target_resolution
             )
-            
+
             # Crop/pad to common dimensions
             if resampled_data.shape != (common_height, common_width):
                 # Create output array with common dimensions
-                aligned_data = np.zeros((common_height, common_width), dtype=resampled_data.dtype)
-                
+                aligned_data = np.zeros(
+                    (common_height, common_width), dtype=resampled_data.dtype
+                )
+
                 # Copy overlapping area
                 h_min = min(resampled_data.shape[0], common_height)
                 w_min = min(resampled_data.shape[1], common_width)
