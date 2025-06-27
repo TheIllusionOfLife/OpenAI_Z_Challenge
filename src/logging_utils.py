@@ -45,9 +45,7 @@ class CustomFormatter(logging.Formatter):
             record.levelname = (
                 f"{self.COLORS[original_levelname]}{record.levelname}{self.RESET}"
             )
-            record.msg = (
-                f"{self.COLORS[original_levelname]}{record.msg}{self.RESET}"
-            )
+            record.msg = f"{self.COLORS[original_levelname]}{record.msg}{self.RESET}"
 
         # Add extra context for archaeological operations
         if hasattr(record, "operation"):

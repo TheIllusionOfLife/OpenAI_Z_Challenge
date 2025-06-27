@@ -66,7 +66,8 @@ class TestOpenAIClient:
 
             client = OpenAIClient(api_key="test_key")
             response = await client.async_completion(
-                messages=[{"role": "user", "content": "Test prompt"}], model="gpt-4-turbo"
+                messages=[{"role": "user", "content": "Test prompt"}],
+                model="gpt-4-turbo",
             )
 
             assert response.content == "Test response"

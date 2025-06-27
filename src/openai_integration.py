@@ -527,7 +527,9 @@ class TokenManager:
         try:
             self.encoding = tiktoken.encoding_for_model(model)
         except (KeyError, ValueError) as e:
-            logging.warning(f"Model {model} not found in tiktoken, using default encoding: {e}")
+            logging.warning(
+                f"Model {model} not found in tiktoken, using default encoding: {e}"
+            )
             self.encoding = tiktoken.get_encoding("cl100k_base")  # Default encoding
 
     def count_tokens(self, text: str) -> int:

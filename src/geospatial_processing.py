@@ -438,9 +438,9 @@ class SpatialFeatureExtractor:
                 # If all values are the same, create uniform image
                 image_uint8 = np.full_like(image, 128, dtype=np.uint8)
             else:
-                image_uint8 = (
-                    (image - img_min) / (img_max - img_min) * 255
-                ).astype(np.uint8)
+                image_uint8 = ((image - img_min) / (img_max - img_min) * 255).astype(
+                    np.uint8
+                )
         else:
             image_uint8 = image
 
