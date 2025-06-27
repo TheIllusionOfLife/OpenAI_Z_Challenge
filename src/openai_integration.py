@@ -56,7 +56,7 @@ class OpenAIClient:
 
         self.max_retries = max_retries
         self.timeout = timeout
-        self.default_model = "gpt-4.1"
+        self.default_model = "gpt-4-turbo"
 
         # Initialize clients
         self.sync_client = OpenAI(api_key=self.api_key, timeout=timeout)
@@ -151,7 +151,7 @@ class LiteratureAnalyzer:
         ]
 
         try:
-            response = self.openai_client.sync_completion(messages, model="gpt-4.1")
+            response = self.openai_client.sync_completion(messages, model="gpt-4-turbo")
             coordinates = json.loads(response.content)
 
             # Validate coordinate format
@@ -198,7 +198,7 @@ class LiteratureAnalyzer:
         ]
 
         try:
-            response = self.openai_client.sync_completion(messages, model="gpt-4.1")
+            response = self.openai_client.sync_completion(messages, model="gpt-4-turbo")
             analysis = json.loads(response.content)
             return analysis
         except (json.JSONDecodeError, Exception) as e:
@@ -323,7 +323,7 @@ class SiteDescriptionGenerator:
         ]
 
         try:
-            response = self.openai_client.sync_completion(messages, model="gpt-4.1")
+            response = self.openai_client.sync_completion(messages, model="gpt-4-turbo")
             return response.content
         except Exception as e:
             self.logger.error(f"Failed to generate site description: {e}")
@@ -421,7 +421,7 @@ class ArchaeologicalKnowledgeExtractor:
         ]
 
         try:
-            response = self.openai_client.sync_completion(messages, model="gpt-4.1")
+            response = self.openai_client.sync_completion(messages, model="gpt-4-turbo")
             characteristics = json.loads(response.content)
             self.knowledge_base.update(characteristics)
             return characteristics
@@ -479,20 +479,20 @@ class ModelSelector:
         self.available_models = {
             "o3-mini": ModelCapabilities(0.8, 0.9, 0.7, 0.8, 128000),
             "o4-mini": ModelCapabilities(0.9, 0.95, 0.8, 0.85, 128000),
-            "gpt-4.1": ModelCapabilities(0.95, 0.98, 0.9, 0.9, 128000),
+            "gpt-4-turbo": ModelCapabilities(0.95, 0.98, 0.9, 0.9, 128000),
         }
 
         self.task_preferences = {
-            "coordinate_extraction": "gpt-4.1",
-            "text_analysis": "gpt-4.1",
-            "report_generation": "gpt-4.1",
+            "coordinate_extraction": "gpt-4-turbo",
+            "text_analysis": "gpt-4-turbo",
+            "report_generation": "gpt-4-turbo",
             "simple_extraction": "o3-mini",
-            "complex_analysis": "gpt-4.1",
+            "complex_analysis": "gpt-4-turbo",
         }
 
     def select_optimal_model(self, task_type: str) -> str:
         """Select optimal model for specific task."""
-        return self.task_preferences.get(task_type, "gpt-4.1")
+        return self.task_preferences.get(task_type, "gpt-4-turbo")
 
     def assess_model_capabilities(self, model_name: str) -> Dict[str, float]:
         """Assess model capabilities for different tasks."""
@@ -514,19 +514,20 @@ class ModelSelector:
         elif task_complexity in ["medium", "text_analysis"]:
             return "o4-mini"
         else:
-            return "gpt-4.1"
+            return "gpt-4-turbo"
 
 
 class TokenManager:
     """Manages token usage and optimization."""
 
-    def __init__(self, model: str = "gpt-4.1"):
+    def __init__(self, model: str = "gpt-4-turbo"):
         """Initialize token manager."""
         self.model = model
         self.max_tokens = 128000  # Default context length
         try:
             self.encoding = tiktoken.encoding_for_model(model)
-        except:
+        except (KeyError, ValueError) as e:
+            logging.warning(f"Model {model} not found in tiktoken, using default encoding: {e}")
             self.encoding = tiktoken.get_encoding("cl100k_base")  # Default encoding
 
     def count_tokens(self, text: str) -> int:

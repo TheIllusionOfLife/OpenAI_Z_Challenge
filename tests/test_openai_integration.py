@@ -66,7 +66,7 @@ class TestOpenAIClient:
 
             client = OpenAIClient(api_key="test_key")
             response = await client.async_completion(
-                messages=[{"role": "user", "content": "Test prompt"}], model="gpt-4.1"
+                messages=[{"role": "user", "content": "Test prompt"}], model="gpt-4-turbo"
             )
 
             assert response.content == "Test response"
@@ -107,7 +107,7 @@ class TestOpenAIClient:
 
             client = OpenAIClient(api_key="test_key", max_retries=3)
             response = client.sync_completion(
-                messages=[{"role": "user", "content": "Test"}], model="gpt-4.1"
+                messages=[{"role": "user", "content": "Test"}], model="gpt-4-turbo"
             )
 
             assert response.content == "Success"
@@ -406,7 +406,7 @@ class TestModelSelector:
         assert selector.available_models is not None
         assert "o3-mini" in selector.available_models
         assert "o4-mini" in selector.available_models
-        assert "gpt-4.1" in selector.available_models
+        assert "gpt-4-turbo" in selector.available_models
 
     def test_select_optimal_model(self):
         """Test selection of optimal model for specific tasks."""
@@ -425,7 +425,7 @@ class TestModelSelector:
         """Test assessment of model capabilities for different tasks."""
         selector = ModelSelector()
 
-        capabilities = selector.assess_model_capabilities("gpt-4.1")
+        capabilities = selector.assess_model_capabilities("gpt-4-turbo")
 
         assert isinstance(capabilities, dict)
         assert "reasoning" in capabilities

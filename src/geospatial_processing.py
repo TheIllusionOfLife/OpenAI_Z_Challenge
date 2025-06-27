@@ -432,9 +432,15 @@ class SpatialFeatureExtractor:
 
         # Convert to uint8 if needed
         if image.dtype != np.uint8:
-            image_uint8 = (
-                (image - image.min()) / (image.max() - image.min()) * 255
-            ).astype(np.uint8)
+            # Handle potential division by zero
+            img_min, img_max = image.min(), image.max()
+            if img_max - img_min == 0:
+                # If all values are the same, create uniform image
+                image_uint8 = np.full_like(image, 128, dtype=np.uint8)
+            else:
+                image_uint8 = (
+                    (image - img_min) / (img_max - img_min) * 255
+                ).astype(np.uint8)
         else:
             image_uint8 = image
 
@@ -472,8 +478,9 @@ class SpatialFeatureExtractor:
                     dissimilarity[i, j] = np.mean(graycoprops(glcm, "dissimilarity"))
                     homogeneity[i, j] = np.mean(graycoprops(glcm, "homogeneity"))
                     energy[i, j] = np.mean(graycoprops(glcm, "energy"))
-                except:
-                    # Handle edge cases
+                except (ValueError, RuntimeError, np.linalg.LinAlgError) as e:
+                    # Handle specific GLCM computation errors
+                    warnings.warn(f"GLCM computation failed at ({i},{j}): {e}")
                     continue
 
         return {

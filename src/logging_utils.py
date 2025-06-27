@@ -40,11 +40,13 @@ class CustomFormatter(logging.Formatter):
 
     def format(self, record):
         if self.use_colors and record.levelname in self.COLORS:
+            # Store original levelname before modification
+            original_levelname = record.levelname
             record.levelname = (
-                f"{self.COLORS[record.levelname]}{record.levelname}{self.RESET}"
+                f"{self.COLORS[original_levelname]}{record.levelname}{self.RESET}"
             )
             record.msg = (
-                f"{self.COLORS[record.levelname.strip()]}{record.msg}{self.RESET}"
+                f"{self.COLORS[original_levelname]}{record.msg}{self.RESET}"
             )
 
         # Add extra context for archaeological operations
