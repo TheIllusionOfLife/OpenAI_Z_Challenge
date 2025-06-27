@@ -2,6 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Development Philosophy
+
+### Test-Driven Development (TDD)
+
+* As an overall principle, do test-driven development.
+* First, write tests based on expected input/output pairs. Avoid creating mock implementations, even for functionality that doesn't exist yet in the codebase.
+* Second, run the tests and confirm they fail. Do not write any implementation code at this stage.
+* Third, commit the test when you're satisfied with them.
+* Then, write code that passes the tests. Do not modify the tests. Keep going until all tests pass.
+* Finally, commit the code once only when you're satisfied with the changes.
+
 ## Project Overview
 
 This is the "OpenAI to Z Challenge" Kaggle competition project for discovering archaeological sites in the Amazon rainforest using AI models. The goal is to identify unknown archaeological sites using LiDAR data, satellite imagery, NDVI data, GIS data, and archaeological literature.
