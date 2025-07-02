@@ -17,7 +17,7 @@ def quick_test():
         print("\n2. Testing basic functionality...")
         from src.geospatial_processing import CoordinateTransformer
 
-        transformer = CoordinateTransformer()
+        transformer = CoordinateTransformer("EPSG:4326", "EPSG:32718")
         print("✓ CoordinateTransformer initialized")
 
         print("\n3. Testing error handling...")

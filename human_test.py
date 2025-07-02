@@ -100,10 +100,8 @@ def test_core_functionality():
         )
 
         # Test coordinate transformation
-        transformer = CoordinateTransformer()
-        result = transformer.transform_coordinates(
-            [-70.0, -12.0], "EPSG:4326", "EPSG:32718"
-        )
+        transformer = CoordinateTransformer("EPSG:4326", "EPSG:32718")
+        result = transformer.transform_coordinates([-70.0, -12.0])
         print(f"✓ Coordinate transformation: {result}")
 
         # Test raster processor
@@ -298,7 +296,7 @@ def run_quick_verification():
         print("2. Testing basic functionality...")
         from src.geospatial_processing import CoordinateTransformer
 
-        transformer = CoordinateTransformer()
+        transformer = CoordinateTransformer("EPSG:4326", "EPSG:32718")
         print("✓ CoordinateTransformer initialized")
 
         print("3. Testing error handling...")
