@@ -6,11 +6,12 @@ This script performs manual verification of core functionality without requiring
 external dependencies like API keys or real geospatial data files.
 """
 
+import os
 import sys
 import traceback
-import psutil
+
 import numpy as np
-import os
+import psutil
 
 
 def test_environment_setup():
@@ -61,8 +62,8 @@ def test_core_functionality():
     print("Testing OpenAI integration...")
     try:
         from src.openai_integration import (
-            OpenAIClient,
             CompletionResponse,
+            OpenAIClient,
             TokenManager,
         )
 
@@ -93,10 +94,10 @@ def test_core_functionality():
     print("\nTesting geospatial processing...")
     try:
         from src.geospatial_processing import (
+            ArchaeologicalSiteDetector,
             CoordinateTransformer,
             RasterProcessor,
             SpatialFeatureExtractor,
-            ArchaeologicalSiteDetector,
         )
 
         # Test coordinate transformation
@@ -148,8 +149,8 @@ def test_integration():
     print("\n=== Phase 3: Integration Testing ===")
 
     try:
-        from src.geospatial_processing import RasterProcessor, SpatialFeatureExtractor
         from src.data_loading import DataLoader
+        from src.geospatial_processing import RasterProcessor, SpatialFeatureExtractor
 
         # Create synthetic pipeline test
         print("Testing integrated geospatial pipeline...")
@@ -250,6 +251,7 @@ def test_performance():
 
     try:
         import psutil
+
         from src.geospatial_processing import SpatialFeatureExtractor
 
         print("Testing memory usage with larger datasets...")
@@ -287,9 +289,9 @@ def run_quick_verification():
 
     try:
         print("1. Testing imports...")
-        import src.openai_integration
-        import src.geospatial_processing
         import src.data_loading
+        import src.geospatial_processing
+        import src.openai_integration
 
         print("✓ All imports successful")
 

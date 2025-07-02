@@ -3,9 +3,11 @@
 
 import sys
 import traceback
-from src.geospatial_processing import RasterProcessor, SpatialFeatureExtractor
-from src.data_loading import DataLoader
+
 import numpy as np
+
+from src.data_loading import DataLoader
+from src.geospatial_processing import RasterProcessor, SpatialFeatureExtractor
 
 
 def test_geospatial_pipeline():

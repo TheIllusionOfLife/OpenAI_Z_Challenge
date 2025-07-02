@@ -8,9 +8,9 @@ def quick_test():
 
     try:
         print("1. Testing imports...")
-        import src.openai_integration
-        import src.geospatial_processing
         import src.data_loading
+        import src.geospatial_processing
+        import src.openai_integration
 
         print("✓ All imports successful")
 
