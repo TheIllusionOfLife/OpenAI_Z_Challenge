@@ -75,14 +75,15 @@ def test_core_functionality():
             print(f"✓ Correctly handles missing API key: {str(e)[:60]}...")
             results.append(True)
 
-        # Test TokenManager with invalid model
+        # Test TokenManager with invalid model (should fallback gracefully, not raise)
         try:
             manager = TokenManager("invalid-model")
-            print("✓ TokenManager handles invalid model gracefully")
+            # Should succeed with fallback encoding
+            print("✓ TokenManager handles invalid model gracefully with fallback")
             results.append(True)
         except Exception as e:
-            print(f"✓ TokenManager error handling: {str(e)[:60]}...")
-            results.append(True)
+            print(f"✗ TokenManager should handle invalid model gracefully: {e}")
+            results.append(False)
 
     except Exception as e:
         print(f"✗ OpenAI integration test failed: {e}")

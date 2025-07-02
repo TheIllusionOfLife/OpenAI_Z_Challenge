@@ -354,8 +354,8 @@ python -c "import [package_name]"
 
 #### Permission Errors
 ```bash
-# Ensure files are executable
-chmod +x *.py
+# Ensure test scripts are executable
+chmod +x human_test.py quick_test.py manual_integration_test.py
 ```
 
 ### Expected Behaviors
