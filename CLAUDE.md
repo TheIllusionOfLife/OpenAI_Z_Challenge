@@ -111,7 +111,7 @@ The codebase follows a modular architecture with these key components:
 - **Integration Tests**: End-to-end testing with real data processing workflows
 - **Performance Tests**: Memory usage and processing speed benchmarks
 - **Human Testing**: Manual verification scripts for comprehensive system validation
-- **CI/CD Pipeline**: Automated testing across Python 3.9-3.11 with coverage reporting
+- **CI/CD Pipeline**: Automated testing across Python 3.9-3.13 with coverage reporting
 
 ### Data Processing Pipeline
 
@@ -126,23 +126,23 @@ The codebase follows a modular architecture with these key components:
 The project uses a comprehensive multi-level testing approach:
 
 **Test Structure:**
-- `tests/test_config.py` - Configuration validation and environment handling
-- `tests/test_data_loading.py` - Multi-format data loading and validation
-- `tests/test_geospatial_processing.py` - Core geospatial algorithms and performance
-- `tests/test_openai_integration.py` - AI model integration and coordinate extraction
-- `tests/test_logging_utils.py` - Logging configuration and error handling
+* `tests/test_config.py` - Configuration validation and environment handling
+* `tests/test_data_loading.py` - Multi-format data loading and validation
+* `tests/test_geospatial_processing.py` - Core geospatial algorithms and performance
+* `tests/test_openai_integration.py` - AI model integration and coordinate extraction
+* `tests/test_logging_utils.py` - Logging configuration and error handling
 
 **Test Markers & Coverage:**
-- `pytest.ini` enforces 80% minimum coverage
-- Test markers: `slow`, `integration`, `unit`, `benchmark`
-- Coverage reports: HTML (htmlcov/) and terminal output
-- Performance benchmarks for memory (<200MB) and speed (<30s) targets
+* `pytest.ini` enforces 80% minimum coverage
+* Test markers: `slow`, `integration`, `unit`, `benchmark`
+* Coverage reports: HTML (htmlcov/) and terminal output
+* Performance benchmarks for memory (<200MB) and speed (<30s) targets
 
 **Key Test Patterns:**
-- **Mock External Dependencies**: OpenAI API, file system operations, network requests
-- **Synthetic Data Generation**: Amazon rainforest signatures for geospatial testing
-- **Property-Based Testing**: Coordinate transformations and mathematical operations
-- **Error Scenario Testing**: Network failures, invalid data, missing files
+* **Mock External Dependencies**: OpenAI API, file system operations, network requests
+* **Synthetic Data Generation**: Amazon rainforest signatures for geospatial testing
+* **Property-Based Testing**: Coordinate transformations and mathematical operations
+* **Error Scenario Testing**: Network failures, invalid data, missing files
 
 ## Environment Configuration
 
@@ -192,35 +192,35 @@ Real competition data integration and final submission:
 The `notebooks/` directory contains comprehensive Phase 2 implementation:
 
 **`01_archaeological_site_discovery_workflow.ipynb`**
-- End-to-end site discovery pipeline with synthetic Amazon rainforest data
-- LiDAR processing, satellite imagery analysis, and NDVI vegetation mapping
-- Archaeological feature detection using terrain analysis and clustering
-- Coordinate extraction from literature using OpenAI models
+* End-to-end site discovery pipeline with synthetic Amazon rainforest data
+* LiDAR processing, satellite imagery analysis, and NDVI vegetation mapping
+* Archaeological feature detection using terrain analysis and clustering
+* Coordinate extraction from literature using OpenAI models
 
 **`02_machine_learning_models.ipynb`**
-- Random Forest and XGBoost models for site classification
-- CNN implementation for image-based site detection
-- Feature engineering from geospatial data (slope, curvature, NDVI)
-- Model evaluation and performance benchmarking
+* Random Forest and XGBoost models for site classification
+* CNN implementation for image-based site detection
+* Feature engineering from geospatial data (slope, curvature, NDVI)
+* Model evaluation and performance benchmarking
 
 **`03_data_integration_pipeline.ipynb`**
-- Multi-source data integration (LiDAR, satellite, literature)
-- Data validation and quality assurance workflows
-- Coordinate reference system transformations
-- Export pipelines for competition submission
+* Multi-source data integration (LiDAR, satellite, literature)
+* Data validation and quality assurance workflows
+* Coordinate reference system transformations
+* Export pipelines for competition submission
 
 ## CI/CD Pipeline Architecture
 
 **GitHub Actions Workflows:**
-- `ci.yml`: Main CI pipeline with Python 3.9-3.11 matrix testing
-- `claude_code.yml` & `claude_code_login.yml`: Claude Code integration
+* `ci.yml`: Main CI pipeline with Python 3.9-3.13 matrix testing
+* `claude_code.yml` & `claude_code_login.yml`: Claude Code integration
 
 **Quality Gates:**
-- Code formatting (Black, isort) with 88-character line length
-- Linting (flake8) with complexity and style checks
-- Security scanning (bandit, safety) for vulnerability detection
-- Test coverage enforcement (>80% required)
-- Performance benchmarks for geospatial processing
+* Code formatting (Black, isort) with 88-character line length
+* Linting (flake8) with complexity and style checks
+* Security scanning (bandit, safety) for vulnerability detection
+* Test coverage enforcement (>80% required)
+* Performance benchmarks for geospatial processing
 
 ## Competition Links
 
