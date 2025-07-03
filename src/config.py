@@ -13,7 +13,8 @@ from typing import Any, Dict, List, Optional
 
 import yaml
 from dotenv import load_dotenv
-from pydantic import BaseSettings, validator
+from pydantic import field_validator
+from pydantic_settings import BaseSettings
 
 # Load environment variables from .env file if it exists
 load_dotenv()
@@ -169,7 +170,7 @@ class Settings(BaseSettings):
         env_file_encoding = "utf-8"
         case_sensitive = False
 
-    @validator("openai_api_key")
+    @field_validator("openai_api_key", mode="before")
     def validate_openai_key(cls, v):
         if not v:
             # Try to get from environment
