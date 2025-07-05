@@ -220,6 +220,56 @@ class ArchaeologicalLiteratureLoader:
         return bool(re.match(doi_pattern, doi))
 
 
+class DataLoader:
+    """Unified data loader for all supported formats."""
+
+    def __init__(self):
+        """Initialize unified data loader."""
+        self.supported_formats = ["geotiff", "csv", "shapefile", "json", "las", "laz"]
+        self.loaders = {
+            "geotiff": LiDARLoader,
+            "csv": None,  # Generic CSV handling
+            "shapefile": GISDataLoader,
+            "json": ArchaeologicalLiteratureLoader,
+            "las": LiDARLoader,
+            "laz": LiDARLoader,
+        }
+
+    def load_data(self, file_path: str, data_type: str = None) -> Any:
+        """Load data from file based on extension or specified type."""
+        file_path = Path(file_path)
+        
+        if data_type is None:
+            # Infer from extension
+            extension = file_path.suffix.lower().lstrip('.')
+            if extension in ["tif", "tiff"]:
+                data_type = "geotiff"
+            elif extension in ["shp"]:
+                data_type = "shapefile"
+            elif extension in ["json"]:
+                data_type = "json"
+            elif extension in ["csv"]:
+                data_type = "csv"
+            elif extension in ["las", "laz"]:
+                data_type = extension
+            else:
+                raise ValueError(f"Unsupported file format: {extension}")
+        
+        if data_type not in self.supported_formats:
+            raise ValueError(f"Unsupported data type: {data_type}")
+        
+        loader_class = self.loaders.get(data_type)
+        if loader_class is None:
+            if data_type == "csv":
+                # Simple CSV loading
+                return pd.read_csv(file_path)
+            else:
+                raise ValueError(f"No loader available for {data_type}")
+        
+        loader = loader_class(str(file_path))
+        return loader.load_data()
+
+
 class DatasetValidator:
     """Validator for dataset consistency and quality."""
 
